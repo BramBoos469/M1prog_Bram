@@ -63,21 +63,28 @@ namespace MovePlayerLoop
 
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            Graphics g = e.Graphics;
-
-
-            g.Clear(Color.Black);
-            g.FillRectangle(player.color, player.x * size, player.y * size, size, size);
-        }
-
         internal void DoLogic(float frametime)
         {
-            //player.x += playerSpeed * frametime;
-            //player.y += playerSpeed * frametime;
+            // Beweeg de speler afhankelijk van de ingedrukte toetsen
+            if (up)
+            {
+                player.y -= playerSpeed * frametime;
+            }
+            if (down)
+            {
+                player.y += playerSpeed * frametime;
+            }
+            if (left)
+            {
+                player.x -= playerSpeed * frametime;
+            }
+            if (right)
+            {
+                player.x += playerSpeed * frametime;
+            }
+
+            
+            
 
         }
     }
