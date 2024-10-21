@@ -18,6 +18,7 @@ namespace UpAndDown
         {
             if (e.KeyCode == Keys.Space)
             {
+                multiplier *= 2;
                 //1) pas de multiplier aan, zorg dat de multiplier de waarde krijgt van zichzelf * 2
             }
         }
@@ -34,8 +35,8 @@ namespace UpAndDown
 
         public void DoLogic(float frametime)
         {
-			//2) verander de code hieronder: zorg dat je de score verhoogt met 2 keer multiplier
-            score += 2;
+            //2) verander de code hieronder: zorg dat je de score verhoogt met 2 keer multiplier
+            score += 2 * multiplier;
         }
     }
 }
