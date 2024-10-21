@@ -3,7 +3,7 @@ namespace HowManyClicks
     public partial class Form1 : Form
     {
         //1) maak hier een variable (int met naar clicks)
-        private ???
+        private int clicks = 0;
         public Form1()
         {
             InitializeComponent();
@@ -13,7 +13,7 @@ namespace HowManyClicks
         {
 
             //2) tel hier 1 op bij clicks (zie boven in de klas)
-            ???
+            clicks++;
             clicksAmountText.Text = clicks.ToString();
         }
     }
