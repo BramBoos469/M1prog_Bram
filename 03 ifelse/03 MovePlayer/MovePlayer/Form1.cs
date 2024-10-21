@@ -76,14 +76,24 @@ namespace MovePlayer
 
         internal void DoLogic(float frametime)
         {
-            //1) je ziet hieronder de code voor het bewegen van de speler.
-            // - zorg ervoor dat je TEST (if) of de speler een richting in moet bewegen (bv of up true is)
-            // - dan in de {} van die if zet je de de JUISTE code van hieronder.
-            // - let op, je moet soms de += en soms de -= gebruiken!
+            // 1) Beweging van de speler in verschillende richtingen
 
-            //player.x += playerSpeed * frametime;
-            //player.y += playerSpeed * frametime;
-
+            if (up)
+            {
+                player.y -= playerSpeed * frametime;
+            }
+            if (down)
+            {
+                player.y += playerSpeed * frametime;
+            }
+            if (left)
+            {
+                player.x -= playerSpeed * frametime;
+            }
+            if (right)
+            {
+                player.x += playerSpeed * frametime;
+            }
         }
     }
 }
