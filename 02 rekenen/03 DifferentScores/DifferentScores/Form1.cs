@@ -17,20 +17,27 @@ namespace UpAndDown
         {
             if (e.KeyCode == Keys.Space)
             {
-                //1) tel hieronder 1 bij de score op
+                // 1) Tel 1 bij de score op wanneer de spatiebalk wordt ingedrukt
+                score += 1;
             }
             if (e.KeyCode == Keys.E)
             {
-                //2) tel hieronder 5 bij de score op
+                // 2) Tel 5 bij de score op wanneer de 'E'-toets wordt ingedrukt
+                score += 5;
             }
             if (e.KeyCode == Keys.W)
             {
-                //3) tel hier zelf iets bij de score op
+                // 3) Tel zelf gekozen aantal (bijv. 10) bij de score op wanneer de 'W'-toets wordt ingedrukt
+                score += 10;
             }
             if (e.KeyCode == Keys.Delete)
             {
-                //4) haal hieronder iets van de score af
+                // 4) Haal een zelf gekozen aantal (bijv. 3) van de score af wanneer de 'Delete'-toets wordt ingedrukt
+                score -= 3;
             }
+
+            // Herteken de interface om de bijgewerkte score weer te geven
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
