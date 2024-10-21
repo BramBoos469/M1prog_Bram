@@ -1,11 +1,9 @@
-
 using System.Diagnostics;
 
 namespace GetThoseCoins
 {
     public partial class Form1 : Form
     {
-
         private const int size = 16;
         Random r = new Random();
 
@@ -15,7 +13,6 @@ namespace GetThoseCoins
         int score = 0;
         bool lDown, rDown;
         DateTime nextCoin = DateTime.Now;
-
 
         Level level = new Level(
             [
@@ -31,7 +28,7 @@ namespace GetThoseCoins
                 "#........#",
             ]
         , size
-            );
+        );
 
         public Form1()
         {
@@ -42,18 +39,17 @@ namespace GetThoseCoins
             KeyUp += Form1_KeyUp;
             player.x = level.playerStart.X;
             player.y = level.playerStart.Y;
-
         }
 
         private void Form1_KeyUp(object? sender, KeyEventArgs e)
         {
             HandleKey(e, false);
         }
+
         private void Form1_KeyDown(object? sender, KeyEventArgs e)
         {
             HandleKey(e, true);
         }
-
 
         private void HandleKey(KeyEventArgs e, bool up)
         {
@@ -73,7 +69,7 @@ namespace GetThoseCoins
 
             DrawLevel(e);
 
-            //speler tekenen
+            // speler tekenen
             e.Graphics.FillRectangle(player.color, player.x, player.y, size, size);
             DrawCoins(e);
             e.Graphics.DrawString("Score: " + score, Font, Brushes.White, 10, 10);
@@ -92,25 +88,36 @@ namespace GetThoseCoins
 
         private void DrawCoins(PaintEventArgs e)
         {
-            foreach (Square row in coins)
+            foreach (Square coin in coins)
             {
-                e.Graphics.FillRectangle(row.color, row.x, row.y, size, size);
+                e.Graphics.FillRectangle(coin.color, coin.x, coin.y, size, size);
             }
         }
 
         public void DoLogic(float frametime)
         {
+            // 1) Als lDown true is, beweegt de speler naar links
+            if (lDown)
+            {
+                player.x -= 112.5f * frametime;
+            }
 
-            //1) als lDown true is dan voer je de code hieronder uit (in de  {} van de if)
-            //player.x -= 112.5f * frametime;
-          
+            // 2) Als rDown true is, beweegt de speler naar rechts
+            if (rDown)
+            {
+                player.x += 112.5f * frametime;
+            }
 
-            //2) als rDown true is dan voer je de code hieronder uit (in de  {} van de if)
-            //player.x += 112.5f * frametime;
-            
+            // 4) Zorg ervoor dat de speler niet buiten het scherm gaat
+            if (player.x < size)
+            {
+                player.x = size; // Beperking aan de linkerkant
+            }
+            if (player.x > size * 8)
+            {
+                player.x = size * 8; // Beperking aan de rechterkant
+            }
 
-            //4) de speler kan nog buiten het scherm komen!!! los dat met een if op.
-            // zet bijvoorbeeld de speler x weer terug op size of op het eind van het scherm (size*8)
             SpawnCoins();
             HandleCoinLogic(frametime);
         }
@@ -121,16 +128,21 @@ namespace GetThoseCoins
             {
                 tile.y -= 100.5f * frametime;
             }
+
             for (int i = coins.Count - 1; i >= 0; i--)
             {
                 Square coin = coins[i];
                 float distToPlayer = GetDistanceToPlayer(coin);
-                //3) als de coin dicht bij de speler is dan:
-                // - gebruik je de code hieronder in de {} van de if
-                //          coins.Remove(coin);
-                // - tel je 1 bij de score op
-               
+
+                // 3) Als de coin dicht bij de speler is, verwijder de coin en verhoog de score
+                if (distToPlayer < size)
+                {
+                    coins.Remove(coin);
+                    score += 1;
+                }
             }
+
+            // Verwijder coins die buiten het scherm zijn
             coins.RemoveAll(coin => coin.y < -10);
         }
 
