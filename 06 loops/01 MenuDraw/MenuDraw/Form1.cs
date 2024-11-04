@@ -1,4 +1,3 @@
-
 namespace MenuDraw
 {
     public partial class Form1 : Form
@@ -18,6 +17,7 @@ namespace MenuDraw
                 new GameMenuItem("Options")
             };
 
+            
             for (int i = 0; i < menu.Length; i++)
             {
                 menu[i].bounds.Y = i * menu[i].bounds.Height;
@@ -28,16 +28,19 @@ namespace MenuDraw
         {
             base.OnPaint(e);
             e.Graphics.Clear(Color.Black);
-            //1) maak hier een for loop, die over menu loopt
+
+            // 1) For-loop om door elk item in menu te gaan en te tekenen
+            for (int i = 0; i < menu.Length; i++)
             {
-			//2) haal de // hieronder weg zodat de code gaat werken
-				//GameMenuItem menuItem = menu[i];
-                //menuItem.Draw(e.Graphics);
+                // 2) Verwijderde de comments zodat de code werkt
+                GameMenuItem menuItem = menu[i];
+                menuItem.Draw(e.Graphics);
             }
         }
 
         public void DoLogic(float frametime)
         {
+          
         }
     }
 }
