@@ -109,12 +109,15 @@ namespace Endless
             }
             if (down)
             {
+                player.y += speed;
             }
             if (left)
             {
+                player.x -= speed;
             }
             if (right)
             {
+                player.x += speed;
             }
         }
     }
