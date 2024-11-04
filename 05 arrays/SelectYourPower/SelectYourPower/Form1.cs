@@ -1,21 +1,19 @@
-
-
 using System.Diagnostics;
 
 namespace SelectYourPower
 {
+    [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
     public partial class Form1 : Form
     {
         private readonly Image image;
         const int spriteSize = 16;
 
-        //UITLEG: deze rectangle geeft aan welk stuk van het plaatje `sprites.png` getekend wordt, probeer het maar aan te passen!
+        
         Rectangle frame = new Rectangle(5, 3, spriteSize * 2, spriteSize);
         Rectangle coin = new Rectangle(8, 26, spriteSize, spriteSize);
 
-        //UITLEG: elk punt is 1 plek waar we mario willen tekenen
+        
         Square player = new Square(50, 50, spriteSize * 2, spriteSize);
-
         List<Square> pickups = new List<Square>();
         string[] powerUps = new string[] { "speed", "missles", "ripple", "lazer", "option" };
         int powerCount = -1;
@@ -23,7 +21,6 @@ namespace SelectYourPower
         private const int size = 16;
         float playerSpeed = 50;
         float nextPickup = 1;
-
 
         public Form1()
         {
@@ -45,32 +42,31 @@ namespace SelectYourPower
 
         private void SelectPowerUp()
         {
-            //1) reset de powerCount variable naar -1
-            powerCount = ???;
+            // 1) Reset de powerCount naar -1
+            powerCount = -1;
         }
 
         private void PowerAdded()
         {
-            //2) tel 1 bij de powerCount op;
-            powerCount ???;
+            // 2) Verhoog powerCount met 1
+            powerCount += 1;
 
-            //3) check of de powerCount waarde groter is dan de powerups lengte min 1
-            if (powerCount > ???)
+            // 3) Controleer of powerCount groter is dan de lengte van powerUps - 1
+            if (powerCount > powerUps.Length - 1)
             {
                 powerCount = 0;
             }
         }
-     
+
         private void Form1_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            //opruimen
+            
             image.Dispose();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
             Graphics g = e.Graphics;
             g.Clear(Color.Black);
 
@@ -89,12 +85,11 @@ namespace SelectYourPower
             int x = 0;
             for (int i = 0; i < powerUps.Length; i++)
             {
-                //4) maak dit af, zorg dat je de huidige powerUp string pakt uit powerUps, gebruik i
-                string powerUp = powerUps???;
+                // 4) Haal de huidige power-up op
+                string powerUp = powerUps[i];
 
                 SizeF sizeF = g.MeasureString(powerUp, Font);
                 g.DrawString(powerUp, Font, Brushes.White, x, 100);
-
 
                 if (powerCount == i)
                 {
@@ -113,10 +108,10 @@ namespace SelectYourPower
         {
             for (int i = pickups.Count - 1; i >= 0; i--)
             {
-                //5) maak dit af, zorg dat je de huidige pickup Square pakt uit pickups, gebruik i
-                Square pickup = ???;
+                // 5) Haal de huidige pickup op uit pickups
+                Square pickup = pickups[i];
                 pickup.x += -playerSpeed * frametime;
-                if (pickup.x < player.x + player.h)//picked up by player 
+                if (pickup.x < player.x + player.h) 
                 {
                     PowerAdded();
                     pickups.RemoveAt(i);
@@ -134,6 +129,11 @@ namespace SelectYourPower
                 pickups.Add(new Square(150, 50, spriteSize, spriteSize));
                 nextPickup = 1;
             }
+        }
+
+        private string GetDebuggerDisplay()
+        {
+            return $"Power Count: {powerCount}, Player Speed: {playerSpeed}";
         }
     }
 }
